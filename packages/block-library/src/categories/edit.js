@@ -345,9 +345,11 @@ export default function CategoriesEdit( {
 			) }
 			{ ! isResolving &&
 				categories?.length > 0 &&
-				( displayAsDropdown
-					? renderCategoryDropdown()
-					: renderCategoryList() ) }
+				( displayAsDropdown ? (
+					renderCategoryDropdown()
+				) : (
+					<nav>{ renderCategoryList() }</nav>
+				) ) }
 		</TagName>
 	);
 }

@@ -41,7 +41,7 @@ function render_block_core_tag_cloud( $attributes ) {
 	$wrapper_attributes = get_block_wrapper_attributes();
 
 	return sprintf(
-		'<p %1$s>%2$s</p>',
+		'<nav %1$s>%2$s</nav>',
 		$wrapper_attributes,
 		$tag_cloud
 	);

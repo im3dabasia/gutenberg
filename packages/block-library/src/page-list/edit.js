@@ -111,7 +111,11 @@ function BlockContent( {
 	}
 
 	if ( pages.length > 0 ) {
-		return <ul { ...innerBlocksProps }></ul>;
+		return (
+			<nav>
+				<ul { ...innerBlocksProps }></ul>
+			</nav>
+		);
 	}
 }
 
