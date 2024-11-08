@@ -349,9 +349,8 @@ function render_block_core_page_list( $attributes, $content, $block ) {
 	);
 
 	return sprintf(
-		$wrapper_markup,
-		$wrapper_attributes,
-		$items_markup
+		'<nav>%s</nav>',
+		sprintf( $wrapper_markup, $wrapper_attributes, $items_markup )
 	);
 }
 
