@@ -137,7 +137,7 @@
 */
 @media (max-width: #{ ($break-small) }) {
 	.wp-block-media-text.is-stacked-on-mobile {
-		grid-template-columns: 100%;
+		grid-template-columns: 100% !important;
 		> .wp-block-media-text__media {
 			grid-column: 1;
 			grid-row: 1;
@@ -146,5 +146,9 @@
 			grid-column: 1;
 			grid-row: 2;
 		}
+	}
+
+	.block-editor-block-preview__content-iframe .wp-block-media-text.is-stacked-on-mobile {
+		grid-template-columns: 50% !important;
 	}
 }
