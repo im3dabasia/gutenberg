@@ -99,6 +99,39 @@ function ListBox( { view, filter, onChangeView }: SearchWidgetProps ) {
 		( f ) => f.field === filter.field
 	);
 	const currentValue = getCurrentValue( filter, currentFilter );
+
+	const handleKeyDown = ( event: React.KeyboardEvent< HTMLDivElement > ) => {
+		const currentIndex = filter.elements.findIndex(
+			( element ) =>
+				activeCompositeId ===
+				generateFilterElementCompositeItemId( baseId, element.value )
+		);
+
+		if ( event.key === 'ArrowDown' ) {
+			const nextIndex = Math.min(
+				filter.elements.length - 1,
+				currentIndex + 1
+			);
+
+			setActiveCompositeId(
+				generateFilterElementCompositeItemId(
+					baseId,
+					filter.elements[ nextIndex ].value
+				)
+			);
+		}
+
+		if ( event.key === 'ArrowUp' ) {
+			const prevIndex = Math.max( 0, currentIndex - 1 );
+			setActiveCompositeId(
+				generateFilterElementCompositeItemId(
+					baseId,
+					filter.elements[ prevIndex ].value
+				)
+			);
+		}
+	};
+
 	return (
 		<Composite
 			virtualFocus
@@ -124,6 +157,7 @@ function ListBox( { view, filter, onChangeView }: SearchWidgetProps ) {
 					);
 				}
 			} }
+			onKeyDown={ handleKeyDown }
 			render={ <Composite.Typeahead /> }
 		>
 			{ filter.elements.map( ( element ) => (
