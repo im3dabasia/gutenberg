@@ -167,7 +167,7 @@ export default function CategoriesEdit( {
 
 	const TagName =
 		!! categories?.length && ! displayAsDropdown && ! isResolving
-			? 'ul'
+			? 'nav'
 			: 'div';
 
 	const classes = clsx( className, {
@@ -260,7 +260,7 @@ export default function CategoriesEdit( {
 				( displayAsDropdown ? (
 					renderCategoryDropdown()
 				) : (
-					<nav>{ renderCategoryList() }</nav>
+					<ul>{ renderCategoryList() }</ul>
 				) ) }
 		</TagName>
 	);
