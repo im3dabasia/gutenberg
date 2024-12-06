@@ -922,8 +922,8 @@ A cloud of popular keywords, each sized by how often it appears. ([Source](https
 
 -	**Name:** core/tag-cloud
 -	**Category:** widgets
--	**Supports:** align, interactivity (clientNavigation), spacing (margin, padding), typography (lineHeight), ~~html~~
--	**Attributes:** largestFontSize, numberOfTags, showTagCounts, smallestFontSize, taxonomy
+-	**Supports:** align, ariaLabel, interactivity (clientNavigation), spacing (margin, padding), typography (lineHeight), ~~html~~
+-	**Attributes:** ariaLabel, largestFontSize, numberOfTags, showTagCounts, smallestFontSize, taxonomy
 
 ## Template Part
 
