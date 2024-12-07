@@ -21,9 +21,11 @@
 @import "./components/sidebar-navigation-screen-details-footer/style.scss";
 @import "./components/sidebar-navigation-screen-navigation-menu/style.scss";
 @import "./components/sidebar-navigation-screen-patterns/style.scss";
+@import "./components/sidebar-navigation-screen-navigation-menus/style.scss";
+@import "./components/sidebar-navigation-screen-main/style.scss";
+@import "./components/sidebar-navigation-screen-templates-browse/style.scss";
 @import "./components/sidebar-dataviews/style.scss";
 @import "./components/site-hub/style.scss";
-@import "./components/sidebar-navigation-screen-navigation-menus/style.scss";
 @import "./components/site-icon/style.scss";
 @import "./components/style-book/style.scss";
 @import "./components/editor-canvas-container/style.scss";
@@ -35,7 +37,6 @@
 @import "./components/pagination/style.scss";
 @import "./components/global-styles/variations/style.scss";
 @import "./components/sidebar-global-styles-wrapper/style.scss";
-@import "./components/sidebar-navigation-screen-main/style.scss";
 
 /* stylelint-disable -- Disable reason: View Transitions not supported properly by stylelint. */
 ::view-transition-image-pair(root) {
