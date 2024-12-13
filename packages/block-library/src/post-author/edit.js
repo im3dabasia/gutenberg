@@ -15,10 +15,11 @@ import {
 } from '@wordpress/block-editor';
 import {
 	ComboboxControl,
-	PanelBody,
 	SelectControl,
 	ToggleControl,
 	__experimentalVStack as VStack,
+	__experimentalToolsPanel as ToolsPanel,
+	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -100,84 +101,155 @@ function PostAuthorEdit( {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings' ) }>
-					<VStack
-						spacing={ 4 }
-						className="wp-block-post-author__inspector-settings"
+				<VStack
+					spacing={ 4 }
+					className="wp-block-post-author__inspector-settings"
+				>
+					<ToolsPanel
+						label={ __( 'Settings' ) }
+						resetAll={ () => {
+							setAttributes( {
+								avatarSize: 48,
+								showAvatar: true,
+								isLink: false,
+								linkTarget: '_self',
+							} );
+						} }
 					>
-						{ showAuthorControl &&
-							( ( showCombobox && (
-								<ComboboxControl
-									__next40pxDefaultSize
-									__nextHasNoMarginBottom
-									label={ __( 'Author' ) }
-									options={ authorOptions }
-									value={ authorId }
-									onChange={ handleSelect }
-									allowReset={ false }
-								/>
-							) ) || (
+						{ showAuthorControl && (
+							<ToolsPanelItem
+								label={ __( 'Author' ) }
+								isShownByDefault
+								hasValue={ () => authorId }
+								onDeselect={ () =>
+									setAttributes( { authorId: null } )
+								}
+							>
+								{ ( showCombobox && (
+									<ComboboxControl
+										__next40pxDefaultSize
+										__nextHasNoMarginBottom
+										label={ __( 'Author' ) }
+										options={ authorOptions }
+										value={ authorId }
+										onChange={ handleSelect }
+										allowReset={ false }
+									/>
+								) ) || (
+									<SelectControl
+										__next40pxDefaultSize
+										__nextHasNoMarginBottom
+										label={ __( 'Author' ) }
+										value={ authorId }
+										options={ authorOptions }
+										onChange={ handleSelect }
+									/>
+								) }
+							</ToolsPanelItem>
+						) }
+						<ToolsPanelItem
+							label={ __( 'Show avatar' ) }
+							isShownByDefault
+							hasValue={ () => showAvatar }
+							onDeselect={ () =>
+								setAttributes( { showAvatar: true } )
+							}
+						>
+							<ToggleControl
+								__nextHasNoMarginBottom
+								label={ __( 'Show avatar' ) }
+								checked={ showAvatar }
+								onChange={ () =>
+									setAttributes( {
+										showAvatar: ! showAvatar,
+									} )
+								}
+							/>
+						</ToolsPanelItem>
+						{ showAvatar && (
+							<ToolsPanelItem
+								label={ __( 'Avatar size' ) }
+								isShownByDefault
+								hasValue={ () => attributes.avatarSize }
+								onDeselect={ () =>
+									setAttributes( { avatarSize: 48 } )
+								}
+							>
 								<SelectControl
 									__next40pxDefaultSize
 									__nextHasNoMarginBottom
-									label={ __( 'Author' ) }
-									value={ authorId }
-									options={ authorOptions }
-									onChange={ handleSelect }
+									label={ __( 'Avatar size' ) }
+									value={ attributes.avatarSize }
+									options={ avatarSizes }
+									onChange={ ( size ) => {
+										setAttributes( {
+											avatarSize: Number( size ),
+										} );
+									} }
 								/>
-							) ) }
-						<ToggleControl
-							__nextHasNoMarginBottom
-							label={ __( 'Show avatar' ) }
-							checked={ showAvatar }
-							onChange={ () =>
-								setAttributes( { showAvatar: ! showAvatar } )
-							}
-						/>
-						{ showAvatar && (
-							<SelectControl
-								__next40pxDefaultSize
-								__nextHasNoMarginBottom
-								label={ __( 'Avatar size' ) }
-								value={ attributes.avatarSize }
-								options={ avatarSizes }
-								onChange={ ( size ) => {
-									setAttributes( {
-										avatarSize: Number( size ),
-									} );
-								} }
-							/>
+							</ToolsPanelItem>
 						) }
-						<ToggleControl
-							__nextHasNoMarginBottom
+						<ToolsPanelItem
 							label={ __( 'Show bio' ) }
-							checked={ showBio }
-							onChange={ () =>
-								setAttributes( { showBio: ! showBio } )
+							isShownByDefault
+							hasValue={ () => showBio }
+							onDeselect={ () =>
+								setAttributes( { showBio: true } )
 							}
-						/>
-						<ToggleControl
-							__nextHasNoMarginBottom
-							label={ __( 'Link author name to author page' ) }
-							checked={ isLink }
-							onChange={ () =>
-								setAttributes( { isLink: ! isLink } )
-							}
-						/>
-						{ isLink && (
+						>
 							<ToggleControl
 								__nextHasNoMarginBottom
-								label={ __( 'Open in new tab' ) }
-								onChange={ ( value ) =>
-									setAttributes( {
-										linkTarget: value ? '_blank' : '_self',
-									} )
+								label={ __( 'Show bio' ) }
+								checked={ showBio }
+								onChange={ () =>
+									setAttributes( { showBio: ! showBio } )
 								}
-								checked={ linkTarget === '_blank' }
 							/>
+						</ToolsPanelItem>
+						<ToolsPanelItem
+							label={ __( 'Link author name' ) }
+							isShownByDefault
+							hasValue={ () => isLink }
+							onDeselect={ () =>
+								setAttributes( { isLink: false } )
+							}
+						>
+							<ToggleControl
+								__nextHasNoMarginBottom
+								label={ __(
+									'Link author name to author page'
+								) }
+								checked={ isLink }
+								onChange={ () =>
+									setAttributes( { isLink: ! isLink } )
+								}
+							/>
+						</ToolsPanelItem>
+						{ isLink && (
+							<ToolsPanelItem
+								label={ __( 'Link target' ) }
+								isShownByDefault
+								hasValue={ () => linkTarget }
+								onDeselect={ () =>
+									setAttributes( { linkTarget: '_self' } )
+								}
+							>
+								<ToggleControl
+									__nextHasNoMarginBottom
+									label={ __( 'Open in new tab' ) }
+									onChange={ ( value ) =>
+										setAttributes( {
+											linkTarget: value
+												? '_blank'
+												: '_self',
+										} )
+									}
+									checked={ linkTarget === '_blank' }
+								/>
+							</ToolsPanelItem>
 						) }
-					</VStack>
-				</PanelBody>
+					</ToolsPanel>
+				</VStack>
 			</InspectorControls>
 
 			<BlockControls group="block">
