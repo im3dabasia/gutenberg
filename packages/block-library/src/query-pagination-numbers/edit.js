@@ -4,8 +4,8 @@
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
-	ToolsPanel,
-	ToolsPanelItem,
+	__experimentalToolsPanel as ToolsPanel,
+	__experimentalToolsPanelItem as ToolsPanelItem,
 	RangeControl,
 } from '@wordpress/components';
 
