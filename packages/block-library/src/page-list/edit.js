@@ -322,7 +322,7 @@ export default function PageListEdit( {
 		<>
 			<InspectorControls>
 				<ToolsPanel
-					label={ __( 'Page List Settings' ) }
+					label={ __( 'Settings' ) }
 					resetAll={ () => {
 						setAttributes( { parentPageID: 0 } );
 					} }
