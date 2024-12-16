@@ -49,7 +49,6 @@ export default function MoreEdit( {
 					resetAll={ () => {
 						setAttributes( {
 							noTeaser: false,
-							customText: DEFAULT_TEXT,
 						} );
 					} }
 				>
