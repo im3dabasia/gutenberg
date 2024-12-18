@@ -137,6 +137,10 @@ const restrictedSyntax = [
 		message:
 			'Avoid truthy checks on length property rendering, as zero length is rendered verbatim.',
 	},
+	{
+		selector: 'Literal[value=/^toggle\\b/i]',
+		message: "Avoid using the verb 'Toggle' in translatable strings",
+	},
 ];
 
 /** `no-restricted-syntax` rules for components. */
