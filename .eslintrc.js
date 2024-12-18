@@ -180,7 +180,6 @@ module.exports = {
 		'@wordpress/react-no-unsafe-timeout': 'error',
 		'@wordpress/i18n-hyphenated-range': 'error',
 		'@wordpress/i18n-no-flanking-whitespace': 'error',
-		'@wordpress/i18n-no-toggle': 'error',
 		'@wordpress/i18n-text-domain': [
 			'error',
 			{
