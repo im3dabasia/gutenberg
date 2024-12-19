@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { useState } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
 import TextTransformControl from '../';
@@ -36,12 +41,10 @@ const meta = {
 			},
 		},
 		value: {
-			options: [ 'none', 'uppercase', 'lowercase', 'capitalize' ],
-			control: { type: 'radio' },
+			control: { type: null },
 			description: 'Currently selected text transform.',
 			table: {
 				type: { summary: 'string' },
-				defaultValue: { summary: 'none' },
 			},
 		},
 	},
@@ -50,10 +53,18 @@ const meta = {
 export default meta;
 
 export const Default = {
-	args: {
-		value: 'none',
-	},
-	render: function Template( props ) {
-		return <TextTransformControl { ...props } />;
+	render: function Template( { onChange, ...args } ) {
+		const [ value, setValue ] = useState();
+
+		return (
+			<TextTransformControl
+				{ ...args }
+				onChange={ ( ...changeArgs ) => {
+					onChange( ...changeArgs );
+					setValue( ...changeArgs );
+				} }
+				value={ value }
+			/>
+		);
 	},
 };
