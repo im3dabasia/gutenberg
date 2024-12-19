@@ -3,14 +3,6 @@
  */
 import TextTransformControl from '../';
 
-/**
- * WordPress dependencies
- */
-import { useState } from '@wordpress/element';
-
-/**
- * Meta configuration for Storybook
- */
 const meta = {
 	title: 'BlockEditor/TextTransformControl',
 	component: TextTransformControl,
@@ -29,7 +21,7 @@ const meta = {
 			control: {
 				type: null,
 			},
-			description: 'Callback function when text transform changes',
+			description: 'Handles change in text transform selection.',
 			table: {
 				type: {
 					summary: 'function',
@@ -38,37 +30,30 @@ const meta = {
 		},
 		className: {
 			control: { type: 'text' },
-			description: 'Additional CSS class name to apply',
+			description: 'Class name to add to the control.',
 			table: {
 				type: { summary: 'string' },
 			},
 		},
 		value: {
-			control: { type: null },
-			description: 'Currently selected writing mode.',
-			table: { type: { summary: 'string' } },
+			options: [ 'none', 'uppercase', 'lowercase', 'capitalize' ],
+			control: { type: 'radio' },
+			description: 'Currently selected text transform.',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'none' },
+			},
 		},
 	},
 };
 
 export default meta;
 
-/**
- * Default Story Export
- */
 export const Default = {
-	render: function Template( { onChange, ...args } ) {
-		const [ value, setValue ] = useState();
-
-		return (
-			<TextTransformControl
-				{ ...args }
-				onChange={ ( ...changeArgs ) => {
-					onChange( ...changeArgs );
-					setValue( ...changeArgs );
-				} }
-				value={ value }
-			/>
-		);
+	args: {
+		value: 'none',
+	},
+	render: function Template( props ) {
+		return <TextTransformControl { ...props } />;
 	},
 };
