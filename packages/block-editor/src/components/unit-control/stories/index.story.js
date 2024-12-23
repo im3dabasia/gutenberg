@@ -8,18 +8,18 @@ import { useState, useEffect } from '@wordpress/element';
  */
 import UnitControl from '../';
 
-const CUSTOM_UNITS = [
-	{ value: 'px', label: 'px', default: 0 },
-	{ value: 'em', label: 'em', default: 0 },
-	{ value: 'rem', label: 'rem', default: 0 },
-];
-
-/**
- * UnitControl Properties
- */
-export default {
+const meta = {
 	title: 'BlockEditor/UnitControl',
 	component: UnitControl,
+	parameters: {
+		docs: {
+			canvas: { sourceState: 'shown' },
+			description: {
+				component:
+					'UnitControl allows the user to set a numeric quantity as well as a unit ',
+			},
+		},
+	},
 	argTypes: {
 		onChange: {
 			action: 'onChange',
@@ -36,7 +36,7 @@ export default {
 			},
 		},
 		labelPosition: {
-			control: 'select',
+			control: 'radio',
 			options: [ 'top', 'side', 'bottom' ],
 			description: 'The position of the label.',
 			table: {
@@ -59,12 +59,12 @@ export default {
 			},
 		},
 		size: {
-			control: 'select',
-			options: [ 'small', 'medium' ],
+			control: 'radio',
+			options: [ 'default', 'small' ],
 			description: 'The size of the control.',
 			table: {
 				type: { summary: 'string' },
-				defaultValue: { summary: 'medium' },
+				defaultValue: { summary: 'default' },
 			},
 		},
 		disabled: {
@@ -76,7 +76,12 @@ export default {
 			},
 		},
 	},
-	render: function Render( { onChange, onUnitChange, value, ...args } ) {
+};
+
+export default meta;
+
+export const Default = {
+	render: function Template( { onChange, onUnitChange, value, ...args } ) {
 		const [ componentValue, setComponentValue ] = useState( value || '' );
 
 		useEffect( () => {
@@ -98,39 +103,5 @@ export default {
 				onUnitChange={ onUnitChange }
 			/>
 		);
-	},
-};
-
-/**
- * Story demonstrating UnitControl with default settings
- */
-export const Default = {
-	args: {
-		label: 'Default Unit Control',
-		value: '10',
-		size: 'medium',
-		labelPosition: 'top',
-	},
-};
-
-/**
- * Story demonstrating UnitControl with custom units
- */
-export const CustomUnits = {
-	args: {
-		...Default.args,
-		label: 'Custom Units',
-		units: CUSTOM_UNITS,
-	},
-};
-
-/**
- * Story demonstrating UnitControl in disabled state
- */
-export const Disabled = {
-	args: {
-		...Default.args,
-		label: 'Disabled Unit Control',
-		disabled: true,
 	},
 };
