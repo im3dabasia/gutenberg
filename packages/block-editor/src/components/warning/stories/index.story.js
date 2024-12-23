@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -24,7 +25,7 @@ const meta = {
 		children: {
 			control: 'text',
 			description:
-				'Intended to represent the block to which the warning pertains. See screenshots above.',
+				'Intended to represent the block to which the warning pertains.',
 			table: {
 				type: { summary: 'string|element' },
 			},
@@ -61,7 +62,25 @@ export const Default = {
 	args: {
 		children: __( 'This block ran into an issue.' ),
 	},
-	render: function Template( props ) {
-		return <Warning { ...props } />;
+};
+
+export const WithActions = {
+	args: {
+		...Default.args,
+		actions: [
+			<Button key="fix-issue" __next40pxDefaultSize variant="primary">
+				{ __( 'Fix issue' ) }
+			</Button>,
+		],
+	},
+};
+
+export const WithSecondaryActions = {
+	args: {
+		...Default.args,
+		secondaryActions: [
+			{ title: __( 'Get help' ) },
+			{ title: __( 'Remove block' ) },
+		],
 	},
 };
