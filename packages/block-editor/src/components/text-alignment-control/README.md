@@ -1,12 +1,10 @@
 # TextAlignmentControl
 
-The `TextAlignmentControl` component is responsible for rendering a control element that allows users to select and apply text alignment options to blocks or elements in the Gutenberg editor. It provides an intuitive interface for aligning text with options such as `left`, `center`, `right`, and `justify`.
+The `TextAlignmentControl` component is responsible for rendering a control element that allows users to select and apply text alignment options to blocks or elements in the Gutenberg editor. It provides an intuitive interface for aligning text with options such as `left`, `center` and `right`.
 
-## Development guidelines
+## Usage
 
-### Usage
-
-Renders the Text Alignment Component with `left`, `center`, `right`, and `justify` alignment options.
+Renders the Text Alignment Component with `left`, `center` and `right` alignment options.
 
 ```jsx
 import { TextAlignmentControl } from '@wordpress/block-editor';
@@ -21,13 +19,13 @@ const MyTextAlignmentControlComponent = () => (
 );
 ```
 
-### Props
+## Props
 
 ### `value`
 
 -   **Type:** `String`
 -   **Default:** `left`
--   **Options:** `left`, `center`, `right`, `justify`
+-   **Options:** `left`, `center`, `right`
 
 The current value of the text alignment setting. You may only choose from the `Options` listed above.
 
@@ -35,7 +33,7 @@ The current value of the text alignment setting. You may only choose from the `O
 
 -   **Type:** `Function`
 
-A callback function invoked when the text alignment value is changed via an interaction with any of the options. The function is called with the new alignment value (`left`, `center`, `right`, `justify`) as the only argument.
+A callback function invoked when the text alignment value is changed via an interaction with any of the options. The function is called with the new alignment value (`left`, `center`, `right`) as the only argument.
 
 ### `className`
 
