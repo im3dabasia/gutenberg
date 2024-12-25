@@ -24,8 +24,8 @@ const MyTextAlignmentControlComponent = () => (
 ### `value`
 
 -   **Type:** `String`
--   **Default:** `left`
--   **Options:** `left`, `center`, `right`
+-   **Default:** `undefined`
+-   **Options:** `left`, `center`, `right`, `justify`
 
 The current value of the text alignment setting. You may only choose from the `Options` listed above.
 
