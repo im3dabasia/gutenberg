@@ -8,9 +8,6 @@ import { useState } from '@wordpress/element';
  */
 import DuotoneControl from '../';
 
-/**
- * Storybook Meta Information
- */
 const meta = {
 	title: 'BlockEditor/DuotoneControl',
 	component: DuotoneControl,
@@ -75,9 +72,6 @@ const meta = {
 
 export default meta;
 
-/**
- * Default Story
- */
 export const Default = {
 	render: function Template( { onChange, ...args } ) {
 		const [ value, setValue ] = useState( 'unset' );
