@@ -431,7 +431,6 @@ export default function NavigationSubmenuEdit( {
 							} }
 							label={ __( 'Link' ) }
 							autoComplete="off"
-							type="url"
 						/>
 					</ToolsPanelItem>
 
