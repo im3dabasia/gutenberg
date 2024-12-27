@@ -4,7 +4,7 @@
 import type { SerializedStyles } from '@emotion/react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactNode, HTMLInputTypeAttribute } from 'react';
 
 /**
  * Internal dependencies
@@ -141,6 +141,7 @@ type InputProps = {
 	dragCursor?: CSSProperties[ 'cursor' ];
 	paddingInlineStart?: CSSProperties[ 'paddingInlineStart' ];
 	paddingInlineEnd?: CSSProperties[ 'paddingInlineEnd' ];
+	type?: HTMLInputTypeAttribute;
 };
 
 const disabledStyles = ( { disabled }: InputProps ) => {
@@ -151,6 +152,15 @@ const disabledStyles = ( { disabled }: InputProps ) => {
 	return css( {
 		color: COLORS.ui.textDisabled,
 	} );
+};
+
+const directionStyles = ( { type }: InputProps ) => {
+	if ( type !== 'url' && type !== 'email' ) {
+		return '';
+	}
+	return css`
+		direction: ltr;
+	`;
 };
 
 export const fontSizeStyles = ( { inputSize: size }: InputProps ) => {
@@ -283,15 +293,10 @@ export const Input = styled.input< InputProps >`
 		${ fontSizeStyles }
 		${ sizeStyles }
 		${ customPaddings }
+		${ directionStyles }
 
 		&::-webkit-input-placeholder {
 			line-height: normal;
-		}
-
-		&[type='email'],
-		&[type='url'] {
-			/* rtl:ignore */
-			direction: ltr;
 		}
 	}
 `;
