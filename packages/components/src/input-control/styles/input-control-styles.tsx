@@ -292,6 +292,11 @@ export const Input = styled.input< InputProps >`
 		&[type='url'] {
 			/* rtl:ignore */
 			direction: ltr;
+
+			&::-webkit-input-placeholder {
+				// For RTL languages, the value changes to "rtl".
+				direction: ltr !important;
+			}
 		}
 	}
 `;
