@@ -109,7 +109,9 @@ export type BoxControlProps = Pick< UnitControlProps, 'units' > &
 		 * If you provide a list of presets, you must provide a preset key to use.
 		 * The format of preset selected values is going to be `var:preset|${ presetKey }|${ presetSlug }`
 		 */
-		presetKey?: string;
+		presetKey?: BoxControlProps[ 'presets' ] extends undefined
+			? never
+			: string;
 	};
 
 export type BoxControlInputControlProps = UnitControlPassthroughProps & {

@@ -4,6 +4,7 @@
 import { useInstanceId } from '@wordpress/compose';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import warning from '@wordpress/warning';
 
 /**
  * Internal dependencies
@@ -165,6 +166,14 @@ function BoxControl( {
 		size: undefined,
 	} );
 	const sidesToRender = getAllowedSides( sides );
+
+	if ( ( presets && ! presetKey ) || ( ! presets && presetKey ) ) {
+		warning(
+			presets
+				? '`presetKey` is required when `presets` is defined.'
+				: '`presets` is required when `presetKey` is defined.'
+		);
+	}
 
 	return (
 		<Grid
