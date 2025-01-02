@@ -1,24 +1,40 @@
 /**
+ * WordPress dependencies
+ */
+import { box, button, cog, paragraph } from '@wordpress/icons';
+
+/**
  * Internal dependencies
  */
 import BlockIcon from '../';
-
-/**
- * WordPress dependencies
- */
-import { paragraph } from '@wordpress/icons';
 
 const meta = {
 	title: 'BlockEditor/BlockIcon',
 	component: BlockIcon,
 	parameters: {
-		docs: { canvas: { sourceState: 'shown' } },
+		docs: {
+			description: {
+				component:
+					'The `BlockIcon` component allows to display a icon for a block.',
+			},
+			canvas: { sourceState: 'shown' },
+		},
 	},
 	argTypes: {
 		icon: {
-			control: 'block',
+			control: 'select',
+			options: [ 'paragraph', 'cog', 'box', 'button' ],
+			mapping: {
+				paragraph,
+				cog,
+				box,
+				button,
+			},
 			description:
-				'The icon to display. Can be a custom icon or a predefined WordPress icon.',
+				'The icon of the block. This can be any of [WordPress Dashicons](https://developer.wordpress.org/resource/dashicons/), or a custom `svg` element.',
+			table: {
+				type: { summary: 'string | object' },
+			},
 		},
 		showColors: {
 			control: 'boolean',
