@@ -39,14 +39,23 @@ const meta = {
 		showColors: {
 			control: 'boolean',
 			description: 'Whether to show background and foreground colors.',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		className: {
 			control: 'text',
 			description: 'Additional CSS class for the icon.',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		context: {
 			control: 'text',
 			description: 'Context where the icon is being used.',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 	},
 };
@@ -58,6 +67,6 @@ export const Default = {
 		icon: paragraph,
 		showColors: false,
 		className: '',
-		context: 'default',
+		context: '',
 	},
 };
