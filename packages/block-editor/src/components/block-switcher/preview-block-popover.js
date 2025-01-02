@@ -30,8 +30,9 @@ export default function PreviewBlockPopover( { blocks } ) {
 						{ __( 'Preview' ) }
 					</div>
 					{ /* 600px is the value of $break-small in base-styles/_breakpoints.scss.
-						So we set the viewport somewhat arbitrarily to 610px to account for the padding of the block. */ }
-					<BlockPreview viewportWidth={ 610 } blocks={ blocks } />
+						We set the viewport width to 601px to make sure that the media-text 
+						block which uses this breakpoint has the correct padding. */ }
+					<BlockPreview viewportWidth={ 601 } blocks={ blocks } />
 				</div>
 			</Popover>
 		</div>
