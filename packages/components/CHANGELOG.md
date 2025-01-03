@@ -6,6 +6,10 @@
 
 -   `Components`: Standardize reduced motion handling using media queries ([#68421](https://github.com/WordPress/gutenberg/pull/68421)).
 
+### Bug Fixes
+
+-   `InputControl`: Ensures email and url inputs have consistent LTR alignment in RTL languages ([#68188](https://github.com/WordPress/gutenberg/pull/68188)).
+
 ## 29.1.0 (2025-01-02)
 
 ### Enhancements
@@ -31,7 +35,7 @@
 -   `BoxControl`: Better respect for the `min` prop in the Range Slider ([#67819](https://github.com/WordPress/gutenberg/pull/67819)).
 -   `FontSizePicker`: Add `display:contents` rule to fix overflowing text in the custom size select. ([#68280](https://github.com/WordPress/gutenberg/pull/68280)).
 -   `BoxControl`: Fix aria-valuetext value ([#68362](https://github.com/WordPress/gutenberg/pull/68362)).
--   `InputControl`: Ensures email and url inputs have consistent LTR alignment in RTL languages ([#65893](https://github.com/WordPress/gutenberg/issues/65893)).
+-   `InputControl`: Ensures email and url inputs have consistent LTR alignment in RTL languages ([#68188](https://github.com/WordPress/gutenberg/pull/68188)).
 
 ### Experimental
 
