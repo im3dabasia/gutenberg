@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useReducer } from '@wordpress/element';
 import {
 	Panel,
 	__experimentalToolsPanel as ToolsPanel,
@@ -10,10 +10,10 @@ import {
 /**
  * Internal dependencies
  */
-import ResolutionTool from '../';
+import ResolutionTool from '..';
 
-const meta = {
-	title: 'BlockEditor/ResolutionTool',
+export default {
+	title: 'BlockEditor/ResolutionControl',
 	component: ResolutionTool,
 	tags: [ 'status-private' ],
 	parameters: {
@@ -27,13 +27,9 @@ const meta = {
 	},
 	argTypes: {
 		value: {
-			control: 'radio',
-			options: [ 'thumbnail', 'medium', 'large', 'full' ],
+			control: { type: null },
 			description: 'Currently selected resolution value.',
-			table: {
-				type: { summary: 'string' },
-				defaultValue: { summary: 'thumbnail' },
-			},
+			table: { type: { summary: 'string' } },
 		},
 		onChange: {
 			action: 'onChange',
@@ -48,14 +44,6 @@ const meta = {
 			description: 'Array of resolution options to display.',
 			table: {
 				type: { summary: 'array' },
-				defaultValue: {
-					summary: JSON.stringify( [
-						{ label: 'Thumbnail', value: 'thumbnail' },
-						{ label: 'Medium', value: 'medium' },
-						{ label: 'Large', value: 'large' },
-						{ label: 'Full Size', value: 'full' },
-					] ),
-				},
 			},
 		},
 		defaultValue: {
@@ -64,7 +52,6 @@ const meta = {
 			description: 'Default resolution value.',
 			table: {
 				type: { summary: 'string' },
-				defaultValue: { summary: 'thumbnail' },
 			},
 		},
 		isShownByDefault: {
@@ -73,7 +60,6 @@ const meta = {
 				'Whether the control is shown by default in the panel.',
 			table: {
 				type: { summary: 'boolean' },
-				defaultValue: { summary: true },
 			},
 		},
 		panelId: {
@@ -86,39 +72,55 @@ const meta = {
 	},
 };
 
-export default meta;
+export const Default = ( {
+	label,
+	panelId,
+	onChange: onChangeProp,
+	...props
+} ) => {
+	const [ attributes, setAttributes ] = useReducer(
+		( prevState, nextState ) => ( { ...prevState, ...nextState } ),
+		{}
+	);
+	const { resolution } = attributes;
+	const resetAll = ( resetFilters = [] ) => {
+		let newAttributes = {};
 
-export const Default = {
-	render: function Template( { onChange, defaultValue, value, ...args } ) {
-		const [ resolution, setResolution ] = useState( value ?? defaultValue );
+		resetFilters.forEach( ( resetFilter ) => {
+			newAttributes = {
+				...newAttributes,
+				...resetFilter( newAttributes ),
+			};
+		} );
 
-		useEffect( () => {
-			if ( value !== resolution ) {
-				setResolution( value );
-			}
-		}, [ value ] );
-
-		const handleChange = ( newValue ) => {
-			setResolution( newValue );
-			onChange?.( newValue );
-		};
-
-		return (
-			<Panel>
-				<ToolsPanel
-					resetAll={ () => {
-						setResolution( defaultValue );
-						onChange?.( defaultValue );
+		setAttributes( newAttributes );
+		onChangeProp( undefined );
+	};
+	return (
+		<Panel>
+			<ToolsPanel
+				label={ label }
+				panelId={ panelId }
+				resetAll={ resetAll }
+			>
+				<ResolutionTool
+					panelId={ panelId }
+					onChange={ ( newValue ) => {
+						setAttributes( { resolution: newValue } );
+						onChangeProp( newValue );
 					} }
-				>
-					<ResolutionTool
-						{ ...args }
-						defaultValue={ defaultValue }
-						onChange={ handleChange }
-						value={ resolution }
-					/>
-				</ToolsPanel>
-			</Panel>
-		);
-	},
+					value={ resolution }
+					resetAllFilter={ () => ( {
+						resolution: undefined,
+					} ) }
+					{ ...props }
+				/>
+			</ToolsPanel>
+		</Panel>
+	);
+};
+Default.args = {
+	label: 'Settings',
+	defaultValue: 'full',
+	panelId: 'panel-id',
 };
