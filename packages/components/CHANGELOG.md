@@ -35,7 +35,6 @@
 -   `BoxControl`: Better respect for the `min` prop in the Range Slider ([#67819](https://github.com/WordPress/gutenberg/pull/67819)).
 -   `FontSizePicker`: Add `display:contents` rule to fix overflowing text in the custom size select. ([#68280](https://github.com/WordPress/gutenberg/pull/68280)).
 -   `BoxControl`: Fix aria-valuetext value ([#68362](https://github.com/WordPress/gutenberg/pull/68362)).
--   `InputControl`: Ensures email and url inputs have consistent LTR alignment in RTL languages ([#68188](https://github.com/WordPress/gutenberg/pull/68188)).
 
 ### Experimental
 
