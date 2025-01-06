@@ -13,7 +13,7 @@ export default function LinkedButton( {
 	isLinked,
 	...props
 }: { isLinked?: boolean } & React.ComponentProps< typeof Button > ) {
-	const label = isLinked ? __( 'Unlink sides44' ) : __( 'Link sides' );
+	const label = isLinked ? __( 'Unlink sides' ) : __( 'Link sides' );
 
 	return (
 		<Button
