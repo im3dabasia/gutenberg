@@ -74,7 +74,7 @@ const meta = {
 				defaultValue: { summary: false },
 			},
 		},
-		disabledUnits: {
+		disableUnits: {
 			control: 'boolean',
 			description: 'If true, the unit select is hidden.',
 			table: {
