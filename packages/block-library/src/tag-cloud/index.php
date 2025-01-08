@@ -17,7 +17,7 @@
 function render_block_core_tag_cloud( $attributes ) {
 	$smallest_font_size = $attributes['smallestFontSize'];
 	$unit               = ( preg_match( '/^[0-9.]+(?P<unit>[a-z%]+)$/i', $smallest_font_size, $m ) ? $m['unit'] : 'pt' );
-	$aria_label         = isset( $attributes['ariaLabel'] ) ? $attributes['ariaLabel'] : 'Tag Cloud';
+	$aria_label         = isset( $attributes['ariaLabel'] ) ? $attributes['ariaLabel'] : __( 'Tag Cloud' );
 
 	$args      = array(
 		'echo'       => false,
