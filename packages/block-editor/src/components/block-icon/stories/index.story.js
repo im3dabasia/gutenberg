@@ -15,7 +15,7 @@ const meta = {
 		docs: {
 			description: {
 				component:
-					'The `BlockIcon` component allows to display a icon for a block.',
+					'The `BlockIcon` component allows to display an icon for a block.',
 			},
 			canvas: { sourceState: 'shown' },
 		},
@@ -64,9 +64,6 @@ export default meta;
 
 export const Default = {
 	args: {
-		icon: paragraph,
-		showColors: false,
-		className: '',
-		context: '',
+		icon: 'paragraph',
 	},
 };
