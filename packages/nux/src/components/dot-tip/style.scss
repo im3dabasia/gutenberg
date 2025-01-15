@@ -23,10 +23,6 @@ $dot-scale: 3;  // How much the pulse animation should scale up by in size
 		@media not (prefers-reduced-motion) {
 			animation: nux-pulse 1.6s infinite cubic-bezier(0.17, 0.67, 0.92, 0.62);
 		}
-
-		@media (prefers-reduced-motion) {
-			animation: none;
-		}
 	}
 
 	&::after {
