@@ -22,7 +22,7 @@ const meta = {
 	},
 	argTypes: {
 		children: {
-			control: 'text',
+			control: 'element',
 			description: 'Content wrapped by the ObserveTyping component.',
 			table: {
 				type: { summary: 'ReactNode' },
@@ -33,27 +33,29 @@ const meta = {
 
 export default meta;
 
+function MyInput() {
+	const [ isTyping, setIsTyping ] = useState( false );
+
+	const onTypingStart = () => setIsTyping( true );
+	const onTypingStop = () => setIsTyping( false );
+
+	return (
+		<div>
+			<p>{ isTyping ? 'Typing...' : 'Not typing' }</p>
+			<input
+				type="text"
+				onFocus={ onTypingStart }
+				onBlur={ onTypingStop }
+			/>
+		</div>
+	);
+}
+
 export const Default = {
 	render: function Template( { children, ...args } ) {
-		const [ isTyping, setIsTyping ] = useState( false );
-
-		const onTypingStart = () => setIsTyping( true );
-		const onTypingStop = () => setIsTyping( false );
-
-		return (
-			<ObserveTyping { ...args }>
-				<div>
-					<p>{ isTyping ? 'Typing...' : 'Not typing' }</p>
-					<input
-						type="text"
-						onFocus={ onTypingStart }
-						onBlur={ onTypingStop }
-					/>
-				</div>
-			</ObserveTyping>
-		);
+		return <ObserveTyping { ...args }>{ children }</ObserveTyping>;
 	},
 	args: {
-		children: 'This is the area where typing will be observed.',
+		children: <MyInput />,
 	},
 };
