@@ -168,10 +168,10 @@ function BoxControl( {
 	const sidesToRender = getAllowedSides( sides );
 
 	if ( ( presets && ! presetKey ) || ( ! presets && presetKey ) ) {
+		const definedProp = presets ? 'presets' : 'presetKey';
+		const missingProp = presets ? 'presetKey' : 'presets';
 		warning(
-			presets
-				? '`presetKey` is required when `presets` is defined.'
-				: '`presets` is required when `presetKey` is defined.'
+			`wp.components.BoxControl: the '${ missingProp }' prop is required when the '${ definedProp }' prop is defined.`
 		);
 	}
 
