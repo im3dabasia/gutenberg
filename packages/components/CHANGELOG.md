@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+-   `BorderBoxControl`, `BoxControl`: Remove `Tooltip` component from linked button ([#68498](https://github.com/WordPress/gutenberg/pull/68498)).
+
 ### Enhancements
 
 -   `BoxControl`: Add presets support ([#67688](https://github.com/WordPress/gutenberg/pull/67688)).
