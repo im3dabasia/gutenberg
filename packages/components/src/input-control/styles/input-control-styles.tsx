@@ -286,6 +286,16 @@ export const Input = styled.input< InputProps >`
 
 		&::-webkit-input-placeholder {
 			line-height: normal;
+			color: ${ COLORS.ui.darkGrayPlaceholder };
+		}
+
+		&::-moz-placeholder {
+			opacity: 1; // Necessary because Firefox reduces this from 1.
+			color: ${ COLORS.ui.darkGrayPlaceholder };
+		}
+
+		&:-ms-input-placeholder {
+			color: ${ COLORS.ui.darkGrayPlaceholder };
 		}
 
 		&[type='email'],
