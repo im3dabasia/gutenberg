@@ -6,7 +6,7 @@ import type { ForwardedRef } from 'react';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { settings } from '@wordpress/icons';
 import {
 	useState,
@@ -140,13 +140,7 @@ const UnforwardedFontSizePicker = (
 			<VisuallyHidden as="legend">{ __( 'Font size' ) }</VisuallyHidden>
 			<Spacer>
 				<Header className="components-font-size-picker__header">
-					<HeaderLabel
-						aria-label={ sprintf(
-							/* translators: %s: Additional header hint. */
-							__( 'Size %s' ),
-							headerHint || ''
-						) }
-					>
+					<HeaderLabel>
 						{ createInterpolateElement(
 							__( 'Size <HeaderHint />' ),
 							{
