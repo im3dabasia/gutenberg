@@ -1476,12 +1476,12 @@ A component which renders its own children only if the current editor post type 
 _Parameters_
 
 -   _props_ `Object`: Props.
--   _props.children_ `React.ReactElement`: Children to be rendered if post type supports.
+-   _props.children_ `React.ReactNode`: Children to be rendered if post type supports.
 -   _props.supportKeys_ `(string|string[])`: String or string array of keys to test.
 
 _Returns_
 
--   `React.ReactElement`: The component to be rendered.
+-   `React.ReactNode`: The component to be rendered.
 
 ### PostURL
 
