@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Internal
+
+-   `BoxControl`: Add runtime check for presets and presetKey ([#68385](https://github.com/WordPress/gutenberg/pull/68385)).
+
 ## 29.2.0 (2025-01-15)
 
 ### Internal
@@ -23,7 +27,6 @@
 -   `Text`: Fix text contrast for dark mode ([#68349](https://github.com/WordPress/gutenberg/pull/68349)).
 -   `Heading`: Revert text contrast fix for dark mode with optimizeReadabilityFor ([#68472](https://github.com/WordPress/gutenberg/pull/68472)).
 -   `Text`: Revert text contrast fix for dark mode with optimizeReadabilityFor ([#68472](https://github.com/WordPress/gutenberg/pull/68472)).
--   `BoxControl`: Add runtime check for presets and presetKey ([#68385](https://github.com/WordPress/gutenberg/pull/68385)).
 
 ### Deprecations
 
