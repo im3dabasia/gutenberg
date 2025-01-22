@@ -2298,7 +2298,7 @@ The following contributors merged PRs in this release:
 - Global styles: Move preload paths filter to 6.7 (previously 6.8). ([66543](https://github.com/WordPress/gutenberg/pull/66543))
 - Fix comment output in styles. ([66439](https://github.com/WordPress/gutenberg/pull/66439))
 - Site editor: Fix save shortcut. ([66423](https://github.com/WordPress/gutenberg/pull/66423))
-- Preload: Fix multiple regressions around global styles. ([66468](https://github.com/WordPress/gutenberg/pull/66468))
+- Preload: Fix multiple regressions around global styles. ([66468](https://github.com/WordPress/gutenberg/pull/66468)) 
 
 #### Build tooling
 - Create block: Ensure $slug is replaced with passed slug. ([66528](https://github.com/WordPress/gutenberg/pull/66528))
