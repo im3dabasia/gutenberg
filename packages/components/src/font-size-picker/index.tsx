@@ -6,9 +6,14 @@ import type { ForwardedRef } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { settings } from '@wordpress/icons';
-import { useState, useMemo, forwardRef } from '@wordpress/element';
+import {
+	useState,
+	useMemo,
+	forwardRef,
+	createInterpolateElement,
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -136,13 +141,23 @@ const UnforwardedFontSizePicker = (
 			<Spacer>
 				<Header className="components-font-size-picker__header">
 					<HeaderLabel
-						aria-label={ `${ __( 'Size' ) } ${ headerHint || '' }` }
+						aria-label={ sprintf(
+							/* translators: %s: Additional header hint. */
+							__( 'Size %s' ),
+							headerHint || ''
+						) }
 					>
-						{ __( 'Size' ) }
-						{ headerHint && (
-							<HeaderHint className="components-font-size-picker__header__hint">
-								{ headerHint }
-							</HeaderHint>
+						{ createInterpolateElement(
+							__( 'Size <HeaderHint />' ),
+							{
+								HeaderHint: headerHint ? (
+									<HeaderHint className="components-font-size-picker__header__hint">
+										{ headerHint }
+									</HeaderHint>
+								) : (
+									<></>
+								),
+							}
 						) }
 					</HeaderLabel>
 					{ ! disableCustomFontSizes && (
