@@ -26,9 +26,13 @@ import InserterDraggableBlocks from '../inserter-draggable-blocks';
 import BlockPatternsPaging from '../block-patterns-paging';
 import { INSERTER_PATTERN_TYPES } from '../inserter/block-patterns-tab/utils';
 
-const WithToolTip = ( { showTooltip, title, children } ) => {
+const WithToolTip = ( { showTooltip, title, placement, children } ) => {
 	if ( showTooltip ) {
-		return <Tooltip text={ title }>{ children }</Tooltip>;
+		return (
+			<Tooltip text={ title } placement={ placement }>
+				{ children }
+			</Tooltip>
+		);
 	}
 	return <>{ children }</>;
 };
@@ -97,6 +101,7 @@ function BlockPattern( {
 					<WithToolTip
 						showTooltip={ showTitlesAsTooltip && ! isUserPattern }
 						title={ pattern.title }
+						placement="top"
 					>
 						<Composite.Item
 							render={
