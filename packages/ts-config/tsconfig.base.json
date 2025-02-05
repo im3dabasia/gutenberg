@@ -30,10 +30,7 @@
 		"esModuleInterop": false,
 		"resolveJsonModule": true,
 
-		"typeRoots": [
-			"${configDir}/typings",
-			"${configDir}/node_modules/@types"
-		],
+		"typeRoots": [ "../../typings", "../../node_modules/@types" ],
 		"types": [],
 		"rootDir": "${configDir}/src",
 		"declarationDir": "${configDir}/build-types"
