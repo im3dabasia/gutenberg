@@ -115,10 +115,6 @@ function TagCloudEdit( { attributes, setAttributes } ) {
 		setAttributes( updateObj );
 	};
 
-	const onChangeAriaLabel = ( value ) => {
-		setAttributes( { ariaLabel: value } );
-	};
-
 	// Remove border styles from the server-side attributes to prevent duplicate border.
 	const serverSideAttributes = {
 		...attributes,
@@ -259,8 +255,10 @@ function TagCloudEdit( { attributes, setAttributes } ) {
 					__next40pxDefaultSize
 					__nextHasNoMarginBottom
 					label={ __( 'Tag Cloud Name' ) }
-					value={ ariaLabel }
-					onChange={ onChangeAriaLabel }
+					value={ ariaLabel || '' }
+					onChange={ ( value ) => {
+						setAttributes( { ariaLabel: value } );
+					} }
 				/>
 			</InspectorControls>
 		</>
