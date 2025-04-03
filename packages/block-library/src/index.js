@@ -48,6 +48,7 @@ import * as cover from './cover';
 import * as details from './details';
 import * as embed from './embed';
 import * as file from './file';
+import * as file2 from './file-list';
 import * as form from './form';
 import * as formInput from './form-input';
 import * as formSubmitButton from './form-submit-button';
@@ -155,6 +156,7 @@ const getAllBlocks = () => {
 		details,
 		embed,
 		file,
+		file2,
 		group,
 		html,
 		latestComments,

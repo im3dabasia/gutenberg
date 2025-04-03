@@ -67,6 +67,8 @@ function gutenberg_reregister_core_block_types() {
 				'comments.php'                     => 'core/comments',
 				'footnotes.php'                    => 'core/footnotes',
 				'file.php'                         => 'core/file',
+				'file2.php'                        => 'core/file2',
+				'file-list.php'                    => 'core/file-list',
 				'form.php'                         => 'core/form',
 				'form-input.php'                   => 'core/form-input',
 				'form-submission-notification.php' => 'core/form-submission-notification',

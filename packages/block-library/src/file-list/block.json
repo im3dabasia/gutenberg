@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "core/file-list",
+	"title": "File List",
+	"allowedBlocks": [ "core/file" ],
+	"category": "media",
+	"description": "This is a file list",
+	"keywords": [ "file-list", "file" ],
+	"textdomain": "default",
+	"supports": {
+		"anchor": true,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"color": {
+			"gradients": true,
+			"link": true,
+			"text": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"link": true
+			}
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"color": true,
+			"width": true,
+			"style": true,
+			"__experimentalDefaultControls": {
+				"radius": true,
+				"color": true,
+				"width": true,
+				"style": true
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex"
+			},
+			"allowJustification": false,
+			"allowVerticalAlignment": false,
+			"allowOrientation": false
+		},
+		"interactivity": true
+	},
+	"editorStyle": "wp-block-file-list-editor",
+	"style": "wp-block-file-list"
+}

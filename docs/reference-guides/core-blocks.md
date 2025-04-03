@@ -275,6 +275,15 @@ Add a link to a downloadable file. ([Source](https://github.com/WordPress/gutenb
 -	**Supports:** align, anchor, color (background, gradients, link, ~~text~~), interactivity, spacing (margin, padding)
 -	**Attributes:** blob, displayPreview, downloadButtonText, fileId, fileName, href, id, previewHeight, showDownloadButton, textLinkHref, textLinkTarget
 
+## File List
+
+This is a file list ([Source](https://github.com/WordPress/gutenberg/tree/trunk/packages/block-library/src/file-list))
+
+-	**Name:** core/file-list
+-	**Category:** media
+-	**Allowed Blocks:** core/file
+-	**Supports:** anchor, color (background, gradients, link, ~~text~~), interactivity, layout (default, ~~allowJustification~~, ~~allowOrientation~~, ~~allowVerticalAlignment~~), spacing (margin, padding)
+
 ## Footnotes
 
 Display footnotes added to the page. ([Source](https://github.com/WordPress/gutenberg/tree/trunk/packages/block-library/src/footnotes))
