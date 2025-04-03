@@ -283,6 +283,7 @@ This is a file list ([Source](https://github.com/WordPress/gutenberg/tree/trunk/
 -	**Category:** media
 -	**Allowed Blocks:** core/file
 -	**Supports:** anchor, color (background, gradients, link, ~~text~~), interactivity, layout (default, ~~allowJustification~~, ~~allowOrientation~~, ~~allowVerticalAlignment~~), spacing (margin, padding)
+-	**Attributes:** files
 
 ## Footnotes
 

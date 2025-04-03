@@ -8,6 +8,12 @@
 	"description": "This is a file list",
 	"keywords": [ "file-list", "file" ],
 	"textdomain": "default",
+	"attributes": {
+		"files": {
+			"type": "array",
+			"default": []
+		}
+	},
 	"supports": {
 		"anchor": true,
 		"spacing": {
