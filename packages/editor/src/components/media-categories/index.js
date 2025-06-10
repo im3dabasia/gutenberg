@@ -174,6 +174,17 @@ const inserterMediaCategories = [
 		},
 	},
 	{
+		name: 'files',
+		labels: {
+			name: __( 'Files' ),
+			search_items: __( 'Search Files' ),
+		},
+		mediaType: 'application',
+		async fetch( query = {} ) {
+			return coreMediaFetch( { ...query, media_type: 'application' } );
+		},
+	},
+	{
 		name: 'openverse',
 		labels: {
 			name: __( 'Openverse' ),

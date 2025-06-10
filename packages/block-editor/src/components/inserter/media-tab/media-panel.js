@@ -20,6 +20,7 @@ export function MediaCategoryPanel( { rootClientId, onInsert, category } ) {
 		per_page: !! debouncedSearch ? 20 : INITIAL_MEDIA_ITEMS_PER_PAGE,
 		search: debouncedSearch,
 	} );
+
 	const baseCssClass = 'block-editor-inserter__media-panel';
 	const searchLabel = category.labels.search_items || __( 'Search' );
 	return (
