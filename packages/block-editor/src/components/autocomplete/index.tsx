@@ -8,6 +8,7 @@ import {
 } from '@wordpress/components';
 import { useMemo } from '@wordpress/element';
 import { getDefaultBlockName, getBlockSupport } from '@wordpress/blocks';
+import type { WPCompleter, UseAutocompleteProps } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -21,10 +22,12 @@ import blockAutocompleter from '../../autocompleters/block';
  *
  * @type {Array}
  */
-const EMPTY_ARRAY = [];
+const EMPTY_ARRAY: WPCompleter[] = [];
 
-function useCompleters( { completers = EMPTY_ARRAY } ) {
-	const { name } = useBlockEditContext();
+function useCompleters( {
+	completers = EMPTY_ARRAY,
+}: UseAutocompleteProps ): WPCompleter[] {
+	const { name } = useBlockEditContext() as { name: string };
 	return useMemo( () => {
 		let filteredCompleters = [ ...completers ];
 
@@ -32,7 +35,10 @@ function useCompleters( { completers = EMPTY_ARRAY } ) {
 			name === getDefaultBlockName() ||
 			getBlockSupport( name, '__experimentalSlashInserter', false )
 		) {
-			filteredCompleters = [ ...filteredCompleters, blockAutocompleter ];
+			filteredCompleters = [
+				...filteredCompleters,
+				blockAutocompleter as WPCompleter,
+			];
 		}
 
 		if ( hasFilter( 'editor.Autocomplete.completers' ) ) {
@@ -47,27 +53,26 @@ function useCompleters( { completers = EMPTY_ARRAY } ) {
 				'editor.Autocomplete.completers',
 				filteredCompleters,
 				name
-			);
+			) as WPCompleter[];
 		}
 
 		return filteredCompleters;
 	}, [ completers, name ] );
 }
 
-export function useBlockEditorAutocompleteProps( props ) {
+export function useBlockEditorAutocompleteProps( props: any ) {
 	return useAutocompleteProps( {
 		...props,
 		completers: useCompleters( props ),
 	} );
 }
-
 /**
  * Wrap the default Autocomplete component with one that supports a filter hook
  * for customizing its list of autocompleters.
  *
  * @type {React.FC}
  */
-function BlockEditorAutocomplete( props ) {
+function BlockEditorAutocomplete( props: any ) {
 	return (
 		<WCAutocomplete { ...props } completers={ useCompleters( props ) } />
 	);

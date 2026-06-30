@@ -218,6 +218,7 @@ export type {
 	FillComponentProps,
 	DistributiveOmit,
 } from './slot-fill/types';
+export type { WPCompleter, UseAutocompleteProps } from './autocomplete/types';
 export { default as __experimentalStyleProvider } from './style-provider';
 export { ZStack as __experimentalZStack } from './z-stack';
 
