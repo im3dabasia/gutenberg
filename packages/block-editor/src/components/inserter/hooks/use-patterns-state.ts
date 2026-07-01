@@ -27,6 +27,7 @@ interface Pattern {
 	name: string;
 	title: string;
 	categories?: Array< string >;
+	blockTypes?: string[];
 }
 /**
  * Retrieves the block patterns inserter state.
@@ -39,11 +40,11 @@ interface Pattern {
  * @return Returns the patterns state. (patterns, categories, onSelect handler)
  */
 const usePatternsState = (
-	onInsert: Function,
+	onInsert?: Function,
 	rootClientId?: string,
 	// @ts-ignore -- Requires a wider change of parameter positioning. TBD in follow-up PR.
-	selectedCategory: string,
-	isQuick: boolean
+	selectedCategory?: string,
+	isQuick?: boolean
 ): [ Pattern[], any[], ( pattern: Pattern, blocks: Block[] ) => void ] => {
 	const options = useMemo(
 		() => ( { [ isFiltered ]: !! isQuick } ),
@@ -144,7 +145,7 @@ const usePatternsState = (
 							} ),
 					  ]
 					: blocks;
-			onInsert(
+			onInsert?.(
 				( patternBlocks ?? [] ).map( ( block: Block ) => {
 					const clonedBlock = cloneBlock( block );
 					if (

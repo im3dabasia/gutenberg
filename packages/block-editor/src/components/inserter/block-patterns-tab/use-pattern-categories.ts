@@ -18,7 +18,18 @@ import {
 	INSERTER_PATTERN_TYPES,
 } from './utils';
 
-function hasRegisteredCategory( pattern, allCategories ) {
+function hasRegisteredCategory(
+	pattern: {
+		id: string;
+		type: string;
+		syncStatus: string;
+		name: string;
+		title: string;
+		categories?: Array< string >;
+		blockTypes: string[];
+	},
+	allCategories: any[]
+) {
 	if ( ! pattern.categories || ! pattern.categories.length ) {
 		return false;
 	}
@@ -28,7 +39,10 @@ function hasRegisteredCategory( pattern, allCategories ) {
 	);
 }
 
-export function usePatternCategories( rootClientId, sourceFilter = 'all' ) {
+export function usePatternCategories(
+	rootClientId: string,
+	sourceFilter = 'all'
+) {
 	const [ patterns, allCategories ] = usePatternsState(
 		undefined,
 		rootClientId
@@ -40,7 +54,7 @@ export function usePatternCategories( rootClientId, sourceFilter = 'all' ) {
 				? patterns
 				: patterns.filter(
 						( pattern ) =>
-							! isPatternFiltered( pattern, sourceFilter )
+							! isPatternFiltered( pattern as any, sourceFilter )
 				  ),
 		[ sourceFilter, patterns ]
 	);
@@ -49,15 +63,16 @@ export function usePatternCategories( rootClientId, sourceFilter = 'all' ) {
 	const populatedCategories = useMemo( () => {
 		const categories = allCategories
 			.filter( ( category ) =>
-				filteredPatterns.some( ( pattern ) =>
-					pattern.categories?.includes( category.name )
+				filteredPatterns.some(
+					( pattern ) => pattern.categories?.includes( category.name )
 				)
 			)
 			.sort( ( a, b ) => a.label.localeCompare( b.label ) );
 
 		if (
 			filteredPatterns.some(
-				( pattern ) => ! hasRegisteredCategory( pattern, allCategories )
+				( pattern ) =>
+					! hasRegisteredCategory( pattern as any, allCategories )
 			) &&
 			! categories.find(
 				( category ) => category.name === 'uncategorized'
@@ -65,12 +80,13 @@ export function usePatternCategories( rootClientId, sourceFilter = 'all' ) {
 		) {
 			categories.push( {
 				name: 'uncategorized',
-				label: _x( 'Uncategorized' ),
+				label: _x( 'Uncategorized', 'categories' ),
 			} );
 		}
 		if (
-			filteredPatterns.some( ( pattern ) =>
-				pattern.blockTypes?.includes( 'core/post-content' )
+			filteredPatterns.some(
+				( pattern ) =>
+					pattern.blockTypes?.includes( 'core/post-content' )
 			)
 		) {
 			categories.unshift( starterPatternsCategory );
