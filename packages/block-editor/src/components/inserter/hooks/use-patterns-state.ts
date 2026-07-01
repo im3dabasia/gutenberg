@@ -6,6 +6,7 @@ import { cloneBlock, createBlock } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import type { Block } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -19,22 +20,31 @@ import {
 import { INSERTER_PATTERN_TYPES } from '../block-patterns-tab/utils';
 import { isFiltered } from '../../../store/utils';
 
+interface Pattern {
+	id: string;
+	type: string;
+	syncStatus: string;
+	name: string;
+	title: string;
+	categories?: Array< string >;
+}
 /**
  * Retrieves the block patterns inserter state.
  *
- * @param {Function} onInsert         function called when inserter a list of blocks.
- * @param {string=}  rootClientId     Insertion's root client ID.
- * @param {string}   selectedCategory The selected pattern category.
- * @param {boolean}  isQuick          For the quick inserter render only allowed patterns.
+ * @param onInsert         function called when inserter a list of blocks.
+ * @param rootClientId     Insertion's root client ID.
+ * @param selectedCategory The selected pattern category.
+ * @param isQuick          For the quick inserter render only allowed patterns.
  *
- * @return {Array} Returns the patterns state. (patterns, categories, onSelect handler)
+ * @return Returns the patterns state. (patterns, categories, onSelect handler)
  */
 const usePatternsState = (
-	onInsert,
-	rootClientId,
-	selectedCategory,
-	isQuick
-) => {
+	onInsert: Function,
+	rootClientId?: string,
+	// @ts-ignore -- Requires a wider change of parameter positioning. TBD in follow-up PR.
+	selectedCategory: string,
+	isQuick: boolean
+): [ Pattern[], any[], ( pattern: Pattern, blocks: Block[] ) => void ] => {
 	const options = useMemo(
 		() => ( { [ isFiltered ]: !! isQuick } ),
 		[ isQuick ]
@@ -76,7 +86,7 @@ const usePatternsState = (
 	// navigation-overlay template part context.
 	// TO DO: create an api for patterns to decide in which context they should be shown.
 	const filteredPatterns = useMemo( () => {
-		return patterns.filter( ( pattern ) => {
+		return patterns.filter( ( pattern: Pattern ) => {
 			const hasNavigationCategory =
 				pattern.categories?.includes( 'navigation' );
 			if ( hasNavigationCategory && ! isWithinNavigationOverlayContext ) {
@@ -91,7 +101,7 @@ const usePatternsState = (
 
 	const allCategories = useMemo( () => {
 		const categories = [ ...patternCategories ];
-		userPatternCategories?.forEach( ( userCategory ) => {
+		userPatternCategories?.forEach( ( userCategory: any ) => {
 			if (
 				! categories.find(
 					( existingCategory ) =>
@@ -106,7 +116,16 @@ const usePatternsState = (
 
 	const { createSuccessNotice } = useDispatch( noticesStore );
 	const onClickPattern = useCallback(
-		( pattern, blocks ) => {
+		(
+			pattern: {
+				id: string;
+				type: string;
+				syncStatus: string;
+				name: string;
+				title: string;
+			},
+			blocks: Block[]
+		) => {
 			const destinationRootClientId = isQuick
 				? rootClientId
 				: getClosestAllowedInsertionPointForPattern(
@@ -119,16 +138,22 @@ const usePatternsState = (
 			const patternBlocks =
 				pattern.type === INSERTER_PATTERN_TYPES.user &&
 				pattern.syncStatus !== 'unsynced'
-					? [ createBlock( 'core/block', { ref: pattern.id } ) ]
+					? [
+							createBlock( 'core/block', {
+								ref: pattern.id,
+							} ),
+					  ]
 					: blocks;
 			onInsert(
-				( patternBlocks ?? [] ).map( ( block ) => {
+				( patternBlocks ?? [] ).map( ( block: Block ) => {
 					const clonedBlock = cloneBlock( block );
 					if (
+						// @ts-ignore -- Requires a wider change of parameter positioning. TBD in follow-up PR.
 						clonedBlock.attributes.metadata?.categories?.includes(
 							selectedCategory
 						)
 					) {
+						// @ts-ignore -- Requires a wider change of parameter positioning. TBD in follow-up PR.
 						clonedBlock.attributes.metadata.categories = [
 							selectedCategory,
 						];

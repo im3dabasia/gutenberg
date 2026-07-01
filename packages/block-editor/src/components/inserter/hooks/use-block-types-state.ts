@@ -12,6 +12,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useCallback, useMemo } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import { __, sprintf } from '@wordpress/i18n';
+import type { Block } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -20,15 +21,31 @@ import { store as blockEditorStore } from '../../../store';
 import { isFiltered } from '../../../store/utils';
 import { unlock } from '../../../lock-unlock';
 
+interface UseBlockTypesState {
+	rootClientId?: string;
+	onInsert: (
+		block: ReturnType< typeof createBlock > | ReturnType< typeof parse >,
+		index?: number,
+		shouldFocusBlock?: boolean,
+		destinationClientId?: string
+	) => void;
+	isQuick: boolean;
+}
+
 /**
  * Retrieves the block types inserter state.
  *
- * @param {string=}  rootClientId Insertion's root client ID.
- * @param {Function} onInsert     function called when inserter a list of blocks.
- * @param {boolean}  isQuick
- * @return {Array} Returns the block types state. (block types, categories, collections, onSelect handler)
+ * @param rootClientId Insertion's root client ID.
+ * @param onInsert     function called when inserter a list of blocks.
+ * @param isQuick
+ * @return  Returns the block types state. (block types, categories, collections, onSelect handler)
  */
-const useBlockTypesState = ( rootClientId, onInsert, isQuick ) => {
+const useBlockTypesState = (
+	rootClientId?: string,
+	// @ts-ignore -- Requires a wider change of parameter positioning. TBD in follow-up PR.
+	onInsert: UseBlockTypesState[ 'onInsert' ],
+	isQuick: boolean
+) => {
 	const options = useMemo(
 		() => ( { [ isFiltered ]: !! isQuick } ),
 		[ isQuick ]
@@ -54,8 +71,20 @@ const useBlockTypesState = ( rootClientId, onInsert, isQuick ) => {
 
 	const onSelectItem = useCallback(
 		(
-			{ name, initialAttributes, innerBlocks, syncStatus, content },
-			shouldFocusBlock
+			{
+				name,
+				initialAttributes,
+				innerBlocks,
+				syncStatus,
+				content,
+			}: {
+				name: string;
+				initialAttributes: Block[ 'attributes' ];
+				innerBlocks: Block[];
+				syncStatus: 'synced' | 'unsynced';
+				content: string;
+			},
+			shouldFocusBlock: boolean
 		) => {
 			const destinationClientId = getClosestAllowedInsertionPoint(
 				name,

@@ -6,6 +6,8 @@ import { isUnmodifiedDefaultBlock } from '@wordpress/blocks';
 import { _n, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import { useCallback } from '@wordpress/element';
+import type { DataRegistry } from '@wordpress/data';
+import type { Block } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -18,6 +20,11 @@ function getIndex( {
 	destinationIndex,
 	rootClientId,
 	registry,
+}: {
+	destinationRootClientId: string;
+	destinationIndex: number;
+	rootClientId: string;
+	registry: DataRegistry;
 } ) {
 	if ( rootClientId === destinationRootClientId ) {
 		return destinationIndex;
@@ -41,24 +48,35 @@ function getIndex( {
 		.length;
 }
 
-/**
- * @typedef WPInserterConfig
- *
- * @property {string=}   rootClientId   If set, insertion will be into the
- *                                      block with this ID.
- * @property {number=}   insertionIndex If set, insertion will be into this
- *                                      explicit position.
- * @property {string=}   clientId       If set, insertion will be after the
- *                                      block with this ID.
- * @property {boolean=}  isAppender     Whether the inserter is an appender
- *                                      or not.
- * @property {Function=} onSelect       Called after insertion.
- */
+interface UseInsertionPointConfig {
+	/**
+	 * If set, insertion will be into the block with this ID.
+	 */
+	rootClientId?: string;
+	/**
+	 * If set, insertion will be into this explicit position.
+	 */
+	insertionIndex?: number;
+	/**
+	 * If set, insertion will be after the block with this ID.
+	 */
+	clientId?: string;
+	/**
+	 * Whether the inserter is an appender or not.
+	 */
+	isAppender?: boolean;
+	/**
+	 * Called after insertion.
+	 */
+	onSelect?: ( blocks: any ) => void;
+	shouldFocusBlock?: boolean;
+	selectBlockOnInsert?: boolean;
+}
 
 /**
  * Returns the insertion point state given the inserter config.
  *
- * @param {WPInserterConfig} config Inserter Config.
+ * @param {UseInsertionPointConfig} config Inserter Config.
  * @return {Array} Insertion Point State (rootClientID, onInsertBlocks and onToggle).
  */
 function useInsertionPoint( {
@@ -69,7 +87,7 @@ function useInsertionPoint( {
 	onSelect,
 	shouldFocusBlock = true,
 	selectBlockOnInsert = true,
-} ) {
+}: UseInsertionPointConfig ) {
 	const registry = useRegistry();
 	const {
 		getSelectedBlock,
@@ -133,7 +151,12 @@ function useInsertionPoint( {
 	} = unlock( useDispatch( blockEditorStore ) );
 
 	const onInsertBlocks = useCallback(
-		( blocks, meta, shouldForceFocusBlock = false, _rootClientId ) => {
+		(
+			blocks: Block | Block[],
+			meta: any,
+			shouldForceFocusBlock: boolean = false,
+			_rootClientId: string
+		) => {
 			// When we are trying to move focus or select a new block on insert, we also
 			// need to clear the last focus to avoid the focus being set to the wrong block
 			// when tabbing back into the canvas if the block was added from outside the
@@ -207,7 +230,7 @@ function useInsertionPoint( {
 	);
 
 	const onToggleInsertionPoint = useCallback(
-		( item ) => {
+		( item: any ) => {
 			if ( item && ! isBlockInsertionPointVisible() ) {
 				const allowedDestinationRootClientId =
 					getClosestAllowedInsertionPoint(
