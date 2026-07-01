@@ -4,12 +4,22 @@
 import removeAccents from 'remove-accents';
 import { noCase } from 'change-case';
 
+interface BaseSearchableItem {
+	name?: string;
+	title: string;
+	description?: string;
+	keywords?: string[];
+	category?: string;
+	id?: string;
+}
+
 // Default search helpers.
-const defaultGetName = ( item ) => item.name || '';
-const defaultGetTitle = ( item ) => item.title;
-const defaultGetDescription = ( item ) => item.description || '';
-const defaultGetKeywords = ( item ) => item.keywords || [];
-const defaultGetCategory = ( item ) => item.category;
+const defaultGetName = ( item: BaseSearchableItem ) => item.name || '';
+const defaultGetTitle = ( item: BaseSearchableItem ) => item.title;
+const defaultGetDescription = ( item: BaseSearchableItem ) =>
+	item.description || '';
+const defaultGetKeywords = ( item: BaseSearchableItem ) => item.keywords || [];
+const defaultGetCategory = ( item: BaseSearchableItem ) => item.category;
 const defaultGetCollection = () => null;
 
 // Normalization regexes
@@ -23,14 +33,32 @@ const stripRegexp = /(\p{C}|\p{P}|\p{S})+/giu; // Anything that's not a punctuat
 const extractedWords = new Map();
 const normalizedStrings = new Map();
 
+interface SearchConfig< T > {
+	getName?: ( item: T ) => string;
+	getTitle?: ( item: T ) => string;
+	getDescription?: ( item: T ) => string;
+	getKeywords?: ( item: T ) => string[];
+	getCategory?: ( item: T ) => string | null | undefined;
+	getCollection?: ( item: T ) => string | null;
+}
+
+interface SearchConfig< T = unknown > {
+	getName?: ( item: T ) => string;
+	getTitle?: ( item: T ) => string;
+	getDescription?: ( item: T ) => string;
+	getKeywords?: ( item: T ) => string[];
+	getCategory?: ( item: T ) => string | null | undefined;
+	getCollection?: ( item: T ) => string | null;
+}
+
 /**
  * Extracts words from an input string.
  *
- * @param {string} input The input string.
+ * @param input The input string.
  *
- * @return {Array} Words, extracted from the input string.
+ * @return  Words, extracted from the input string.
  */
-export function extractWords( input = '' ) {
+export function extractWords( input: string = '' ): string[] {
 	if ( extractedWords.has( input ) ) {
 		return extractedWords.get( input );
 	}
@@ -50,11 +78,11 @@ export function extractWords( input = '' ) {
 /**
  * Sanitizes the search input string.
  *
- * @param {string} input The search input to normalize.
+ * @param input The search input to normalize.
  *
- * @return {string} The normalized search input.
+ * @return The normalized search input.
  */
-export function normalizeString( input = '' ) {
+export function normalizeString( input: string = '' ): string {
 	if ( normalizedStrings.has( input ) ) {
 		return normalizedStrings.get( input );
 	}
@@ -79,15 +107,18 @@ export function normalizeString( input = '' ) {
 /**
  * Converts the search term into a list of normalized terms.
  *
- * @param {string} input The search term to normalize.
+ * @param input The search term to normalize.
  *
- * @return {string[]} The normalized list of search terms.
+ * @return  The normalized list of search terms.
  */
-export const getNormalizedSearchTerms = ( input = '' ) => {
+export const getNormalizedSearchTerms = ( input: string = '' ): string[] => {
 	return extractWords( normalizeString( input ) );
 };
 
-const removeMatchingTerms = ( unmatchedTerms, unprocessedTerms ) => {
+const removeMatchingTerms = (
+	unmatchedTerms: string[],
+	unprocessedTerms: string
+): string[] => {
 	return unmatchedTerms.filter(
 		( term ) =>
 			! getNormalizedSearchTerms( unprocessedTerms ).some(
@@ -96,11 +127,11 @@ const removeMatchingTerms = ( unmatchedTerms, unprocessedTerms ) => {
 	);
 };
 
-export const searchBlockItems = (
-	items,
-	categories,
-	collections,
-	searchInput
+export const searchBlockItems = < T extends BaseSearchableItem >(
+	items: T[],
+	categories: { slug: string; title: string }[],
+	collections: Record< string, { title: string } >,
+	searchInput: string
 ) => {
 	const normalizedSearchTerms = getNormalizedSearchTerms( searchInput );
 	if ( normalizedSearchTerms.length === 0 ) {
@@ -108,10 +139,10 @@ export const searchBlockItems = (
 	}
 
 	const config = {
-		getCategory: ( item ) =>
+		getCategory: ( item: T ) =>
 			categories.find( ( { slug } ) => slug === item.category )?.title,
-		getCollection: ( item ) =>
-			collections[ item.name.split( '/' )[ 0 ] ]?.title,
+		getCollection: ( item: T ) =>
+			collections[ ( item.name as string ).split( '/' )[ 0 ] ]?.title,
 	};
 
 	return searchItems( items, searchInput, config );
@@ -120,20 +151,24 @@ export const searchBlockItems = (
 /**
  * Filters an item list given a search term.
  *
- * @param {Array}  items       Item list
- * @param {string} searchInput Search input.
- * @param {Object} config      Search Config.
+ * @param  items       Item list
+ * @param  searchInput Search input.
+ * @param  config      Search Config.
  *
  * @return {Array} Filtered item list.
  */
-export const searchItems = ( items = [], searchInput = '', config = {} ) => {
+export const searchItems = < T extends BaseSearchableItem >(
+	items: T[] = [],
+	searchInput: string = '',
+	config: SearchConfig< T > = {}
+): T[] => {
 	const normalizedSearchTerms = getNormalizedSearchTerms( searchInput );
 	if ( normalizedSearchTerms.length === 0 ) {
 		return items;
 	}
 
 	const rankedItems = items
-		.map( ( item ) => {
+		.map( ( item ): [ T, number ] => {
 			return [ item, getItemSearchRank( item, searchInput, config ) ];
 		} )
 		.filter( ( [ , rank ] ) => rank > 0 );
@@ -147,13 +182,17 @@ export const searchItems = ( items = [], searchInput = '', config = {} ) => {
  * The better the match, the higher the rank.
  * If the rank equals 0, it should be excluded from the results.
  *
- * @param {Object} item       Item to filter.
- * @param {string} searchTerm Search term.
- * @param {Object} config     Search Config.
+ * @param item       Item to filter.
+ * @param searchTerm Search term.
+ * @param config     Search Config.
  *
- * @return {number} Search Rank.
+ * @return  Search Rank.
  */
-export function getItemSearchRank( item, searchTerm, config = {} ) {
+export function getItemSearchRank< T extends BaseSearchableItem >(
+	item: T,
+	searchTerm: string,
+	config: SearchConfig< T > = {}
+): number {
 	const {
 		getName = defaultGetName,
 		getTitle = defaultGetTitle,

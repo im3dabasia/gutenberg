@@ -17,9 +17,22 @@ import deprecated from '@wordpress/deprecated';
  */
 import Inserter from '../inserter';
 
+interface ButtonBlockAppenderProps {
+	rootClientId?: string;
+	className?: string;
+	onFocus?: () => void;
+	tabIndex?: number;
+	onSelect?: ( ...args: unknown[] ) => void;
+}
 function ButtonBlockAppender(
-	{ rootClientId, className, onFocus, tabIndex, onSelect },
-	ref
+	{
+		rootClientId,
+		className,
+		onFocus,
+		tabIndex,
+		onSelect,
+	}: ButtonBlockAppenderProps,
+	ref: React.ForwardedRef< HTMLButtonElement >
 ) {
 	return (
 		<Inserter
@@ -91,7 +104,10 @@ function ButtonBlockAppender(
  *
  * @deprecated
  */
-export const ButtonBlockerAppender = forwardRef( ( props, ref ) => {
+export const ButtonBlockerAppender = forwardRef<
+	HTMLButtonElement,
+	ButtonBlockAppenderProps
+>( ( props, ref ) => {
 	deprecated( `wp.blockEditor.ButtonBlockerAppender`, {
 		alternative: 'wp.blockEditor.ButtonBlockAppender',
 		since: '5.9',

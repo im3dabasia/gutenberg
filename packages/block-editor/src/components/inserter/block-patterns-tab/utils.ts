@@ -30,7 +30,18 @@ export const starterPatternsCategory = {
 	label: __( 'Starter content' ),
 };
 
-export function isPatternFiltered( pattern, sourceFilter, syncFilter ) {
+interface Pattern {
+	name: string;
+	source: string;
+	syncStatus: string;
+	type: string;
+}
+
+export function isPatternFiltered(
+	pattern: Pattern,
+	sourceFilter: ( typeof INSERTER_PATTERN_TYPES )[ keyof typeof INSERTER_PATTERN_TYPES ],
+	syncFilter: ( typeof INSERTER_SYNC_TYPES )[ keyof typeof INSERTER_SYNC_TYPES ]
+): boolean {
 	const isUserPattern = pattern.name.startsWith( 'core/block' );
 	const isDirectoryPattern =
 		pattern.source === 'core' ||
