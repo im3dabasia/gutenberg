@@ -9,12 +9,34 @@ import { useSelect } from '@wordpress/data';
 import { useLayout } from '../block-list/layout';
 import { store as blockEditorStore } from '../../store';
 import { getLayoutType } from '../../layouts';
+import type { BlockAlignment } from './constants';
 
-const EMPTY_ARRAY = [];
-const DEFAULT_CONTROLS = [ 'none', 'left', 'center', 'right', 'wide', 'full' ];
-const WIDE_CONTROLS = [ 'wide', 'full' ];
+export interface AlignmentItem {
+	name: BlockAlignment;
+	info?: string;
+}
 
-export default function useAvailableAlignments( controls = DEFAULT_CONTROLS ) {
+interface LayoutWithAlignments {
+	type?: string;
+	alignments?: string[];
+	contentSize?: string;
+	wideSize?: string;
+}
+
+const EMPTY_ARRAY: AlignmentItem[] = [];
+const DEFAULT_CONTROLS: BlockAlignment[] = [
+	'none',
+	'left',
+	'center',
+	'right',
+	'wide',
+	'full',
+];
+const WIDE_CONTROLS: BlockAlignment[] = [ 'wide', 'full' ];
+
+export default function useAvailableAlignments(
+	controls: BlockAlignment[] = DEFAULT_CONTROLS
+): AlignmentItem[] {
 	// Always add the `none` option if not exists.
 	if ( ! controls.includes( 'none' ) ) {
 		controls = [ 'none', ...controls ];
@@ -29,30 +51,40 @@ export default function useAvailableAlignments( controls = DEFAULT_CONTROLS ) {
 				// the `useSelect` but we must call it anyway because Rules of Hooks.
 				// So the callback returns early to avoid block editor subscription.
 				if ( isNoneOnly ) {
-					return [ false, false, false ];
+					return [ false, false, false ] as const;
 				}
 
-				const settings = select( blockEditorStore ).getSettings();
+				const settings = select( blockEditorStore ).getSettings() as {
+					alignWide?: boolean;
+					supportsLayout?: boolean;
+					__unstableIsBlockBasedTheme?: boolean;
+				};
 				return [
 					settings.alignWide ?? false,
 					settings.supportsLayout,
 					settings.__unstableIsBlockBasedTheme,
-				];
+				] as const;
 			},
 			[ isNoneOnly ]
 		);
-	const layout = useLayout();
+	const layout = useLayout() as LayoutWithAlignments;
 
 	if ( isNoneOnly ) {
 		return EMPTY_ARRAY;
 	}
 
-	const layoutType = getLayoutType( layout?.type );
+	const layoutType = getLayoutType( layout?.type ) as {
+		name: string;
+		getAlignments: (
+			layout: LayoutWithAlignments,
+			isBlockBasedTheme?: boolean
+		) => AlignmentItem[];
+	};
 
 	if ( themeSupportsLayout ) {
 		const layoutAlignments = layoutType.getAlignments(
 			layout,
-			isBlockBasedTheme
+			isBlockBasedTheme as boolean | undefined
 		);
 		const alignments = layoutAlignments.filter( ( alignment ) =>
 			controls.includes( alignment.name )
@@ -70,7 +102,7 @@ export default function useAvailableAlignments( controls = DEFAULT_CONTROLS ) {
 		return EMPTY_ARRAY;
 	}
 
-	const alignments = controls
+	const alignments: AlignmentItem[] = controls
 		.filter( ( control ) => {
 			if ( layout.alignments ) {
 				return layout.alignments.includes( control );

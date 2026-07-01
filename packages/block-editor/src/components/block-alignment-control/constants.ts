@@ -10,8 +10,25 @@ import {
 	stretchFullWidth,
 	stretchWide,
 } from '@wordpress/icons';
+import type { IconType } from '@wordpress/components';
 
-export const BLOCK_ALIGNMENTS_CONTROLS = {
+export type BlockAlignment =
+	| 'none'
+	| 'left'
+	| 'center'
+	| 'right'
+	| 'wide'
+	| 'full';
+
+export interface BlockAlignmentControl {
+	icon: IconType;
+	title: string;
+}
+
+export const BLOCK_ALIGNMENTS_CONTROLS: Record<
+	BlockAlignment,
+	BlockAlignmentControl
+> = {
 	none: {
 		icon: alignNone,
 		title: _x( 'None', 'Alignment option' ),
@@ -38,4 +55,4 @@ export const BLOCK_ALIGNMENTS_CONTROLS = {
 	},
 };
 
-export const DEFAULT_CONTROL = 'none';
+export const DEFAULT_CONTROL: BlockAlignment = 'none';

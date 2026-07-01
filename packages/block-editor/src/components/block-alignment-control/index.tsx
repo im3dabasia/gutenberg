@@ -2,12 +2,20 @@
  * Internal dependencies
  */
 import BlockAlignmentUI from './ui';
+import type { BlockAlignment } from './constants';
 
-const BlockAlignmentControl = ( props ) => {
+export interface BlockAlignmentControlProps {
+	value?: BlockAlignment;
+	onChange: ( align: BlockAlignment | undefined ) => void;
+	controls?: BlockAlignment[];
+	isCollapsed?: boolean;
+}
+
+const BlockAlignmentControl = ( props: BlockAlignmentControlProps ) => {
 	return <BlockAlignmentUI { ...props } isToolbar={ false } />;
 };
 
-const BlockAlignmentToolbar = ( props ) => {
+const BlockAlignmentToolbar = ( props: BlockAlignmentControlProps ) => {
 	return <BlockAlignmentUI { ...props } isToolbar />;
 };
 

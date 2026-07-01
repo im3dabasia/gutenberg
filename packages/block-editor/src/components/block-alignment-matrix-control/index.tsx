@@ -11,6 +11,26 @@ import {
 
 const noop = () => {};
 
+interface BlockAlignmentMatrixControlProps {
+	/**
+	 * Label for the control. Defaults to 'Change matrix alignment'.
+	 */
+	label?: string;
+	/**
+	 * Function to execute upon change of matrix state.
+	 */
+	onChange: ( align: string | undefined ) => void;
+	/**
+	 * Content alignment location. One of: 'center', 'center center',
+	 * 'center left', 'center right', 'top center', 'top left',
+	 * 'top right', 'bottom center', 'bottom left', 'bottom right'.
+	 */
+	value?: string;
+	/**
+	 * Whether the control should be disabled.
+	 */
+	isDisabled?: boolean;
+}
 /**
  * The alignment matrix control allows users to quickly adjust inner block alignment.
  *
@@ -32,17 +52,10 @@ const noop = () => {};
  *   );
  * }
  * ```
- *
- * @param {Object}   props            Component props.
- * @param {string}   props.label      Label for the control. Defaults to 'Change matrix alignment'.
- * @param {Function} props.onChange   Function to execute upon change of matrix state.
- * @param {string}   props.value      Content alignment location. One of: 'center', 'center center',
- *                                    'center left', 'center right', 'top center', 'top left',
- *                                    'top right', 'bottom center', 'bottom left', 'bottom right'.
- * @param {boolean}  props.isDisabled Whether the control should be disabled.
- * @return {Element} The BlockAlignmentMatrixControl component.
  */
-function BlockAlignmentMatrixControl( props ) {
+function BlockAlignmentMatrixControl(
+	props: BlockAlignmentMatrixControlProps
+): Element {
 	const {
 		label = __( 'Change matrix alignment' ),
 		onChange = noop,
