@@ -18,7 +18,18 @@ import { unlock } from '../../lock-unlock';
 
 const { ComponentsContext } = unlock( privateApis );
 
-export default function BlockControlsSlot( { group = 'default', ...props } ) {
+type GroupKey = keyof typeof groups;
+
+interface BlockControlsSlotProps {
+	group?: GroupKey;
+	className?: string;
+	style?: React.CSSProperties;
+}
+
+export default function BlockControlsSlot( {
+	group = 'default',
+	...props
+}: BlockControlsSlotProps ) {
 	const toolbarState = useContext( ToolbarContext );
 	const contextState = useContext( ComponentsContext );
 	const fillProps = useMemo(

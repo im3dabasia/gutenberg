@@ -1,8 +1,4 @@
 /**
- * WordPress dependencies
- */
-
-/**
  * Internal dependencies
  */
 import groups from './groups';
@@ -12,8 +8,13 @@ import {
 	mayDisplayParentControlsKey,
 } from '../block-edit/context';
 
-export default function useBlockControlsFill( group, shareWithChildBlocks ) {
-	const context = useBlockEditContext();
+type GroupKey = keyof typeof groups;
+
+export default function useBlockControlsFill(
+	group: GroupKey,
+	shareWithChildBlocks: boolean
+): ( typeof groups )[ GroupKey ][ 'Fill' ] | null {
+	const context = useBlockEditContext() as Record< symbol, unknown >;
 	if ( context[ mayDisplayControlsKey ] ) {
 		return groups[ group ]?.Fill;
 	}
