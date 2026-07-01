@@ -22,17 +22,21 @@ import { store as blockEditorStore } from '../../store';
  * useBlockDisplayTitle( { clientId: 'afd1cb17-2c08-4e7a-91be-007ba7ddc3a1', maximumLength: 17 } );
  * ```
  *
- * @param {Object}           props
- * @param {string}           props.clientId      Client ID of block.
- * @param {number|undefined} props.maximumLength The maximum length that the block title string may be before truncated.
- * @param {string|undefined} props.context       The context to pass to `getBlockLabel`.
- * @return {?string} Block title.
+ * @param props
+ * @param props.clientId      Client ID of block.
+ * @param props.maximumLength The maximum length that the block title string may be before truncated.
+ * @param props.context       The context to pass to `getBlockLabel`.
+ * @return  Block title.
  */
 export default function useBlockDisplayTitle( {
 	clientId,
 	maximumLength,
 	context,
-} ) {
+}: {
+	clientId: string;
+	maximumLength?: number;
+	context?: string;
+} ): string | null {
 	const blockTitle = useSelect(
 		( select ) => {
 			if ( ! clientId ) {
@@ -50,7 +54,10 @@ export default function useBlockDisplayTitle( {
 				return null;
 			}
 
-			const attributes = getBlockAttributes( clientId );
+			const attributes = getBlockAttributes( clientId ) as Record<
+				string,
+				unknown
+			>;
 			const label = getBlockLabel( blockType, attributes, context );
 			// If the label is defined we prioritize it over a possible block variation title match.
 			if ( label !== blockType.title ) {

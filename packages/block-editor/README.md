@@ -280,14 +280,14 @@ _Usage_
 
 _Parameters_
 
--   _props_ `Object`:
+-   _props_ `{ clientId: string; maximumLength?: number; context?: string; }`:
 -   _props.clientId_ `string`: Client ID of block.
--   _props.maximumLength_ `number|undefined`: The maximum length that the block title string may be before truncated.
--   _props.context_ `string|undefined`: The context to pass to `getBlockLabel`.
+-   _props.maximumLength_ `number`: The maximum length that the block title string may be before truncated.
+-   _props.context_ `string`: The context to pass to `getBlockLabel`.
 
 _Returns_
 
--   `React.JSX.Element`: Block title.
+-   Block title.
 
 ### BlockToolbar
 
