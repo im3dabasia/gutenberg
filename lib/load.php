@@ -67,7 +67,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 	require __DIR__ . '/compat/wordpress-7.0/global-styles.php';
 
 	// WordPress 7.1 compat.
-	require __DIR__ . '/compat/wordpress-7.1/class-gutenberg-rest-autosaves-controller.php';
 	require __DIR__ . '/compat/wordpress-7.1/class-gutenberg-rest-attachments-controller-7-1.php';
 	require __DIR__ . '/compat/wordpress-7.1/class-gutenberg-view-config-data.php';
 	require __DIR__ . '/compat/wordpress-7.1/view-config-api.php';
@@ -75,10 +74,15 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 	require __DIR__ . '/compat/wordpress-7.1/class-wp-icon-collections-registry.php';
 	require __DIR__ . '/compat/wordpress-7.1/class-wp-rest-icon-collections-controller.php';
 	require __DIR__ . '/compat/wordpress-7.1/rest-api.php';
-	require __DIR__ . '/compat/wordpress-7.1/collaboration.php';
 	require __DIR__ . '/compat/wordpress-7.1/block-bindings.php';
 	require __DIR__ . '/compat/wordpress-7.1/query-block.php';
 	require __DIR__ . '/compat/wordpress-7.1/block-comments.php';
+
+	// WordPress 7.2 compat.
+	// Real-time collaboration (RTC) is not targeting a WordPress Core release,
+	// so its provider code lives here rather than in a version compat folder.
+	require __DIR__ . '/compat/wordpress-7.2/class-gutenberg-rest-autosaves-controller.php';
+	require __DIR__ . '/compat/wordpress-7.2/collaboration.php';
 
 	// Plugin specific code.
 	require_once __DIR__ . '/class-wp-rest-global-styles-controller-gutenberg.php';
@@ -86,8 +90,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 	require_once __DIR__ . '/class-wp-icons-registry-gutenberg.php';
 	require_once __DIR__ . '/class-wp-rest-icons-controller-gutenberg.php';
 	require_once __DIR__ . '/rest-api.php';
-
-	// Experimental autosaves controller override for real-time collaboration.
 
 	require_once __DIR__ . '/experimental/rest-api.php';
 	require_once __DIR__ . '/experimental/kses-allowed-html.php';
@@ -127,7 +129,11 @@ require __DIR__ . '/compat/wordpress-7.1/kses.php';
 require __DIR__ . '/compat/wordpress-7.1/media.php';
 require __DIR__ . '/compat/wordpress-7.1/preload.php';
 require __DIR__ . '/compat/wordpress-7.1/icons.php';
-require __DIR__ . '/compat/wordpress-7.1/meta-box-rtc-compat.php';
+
+// WordPress 7.2 compat.
+// Real-time collaboration (RTC) is not targeting a WordPress Core release,
+// so its provider code lives here rather than in a version compat folder.
+require __DIR__ . '/compat/wordpress-7.2/meta-box-rtc-compat.php';
 
 // Experimental features.
 require __DIR__ . '/experimental/block-editor-settings-mobile.php';
